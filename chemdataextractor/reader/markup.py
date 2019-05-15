@@ -5,6 +5,8 @@ chemdataextractor.reader.markup
 
 XML and HTML readers based on lxml.
 
+:copyright: Copyright 2016 by Matt Swain.
+:license: MIT, see LICENSE file for more details.
 """
 
 from __future__ import absolute_import
@@ -46,6 +48,7 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
     heading_css = 'h2, h3, h4, h5, h6'
     table_css = 'table'
     table_caption_css = 'caption'
+    table_title_css = 'title'
     table_head_row_css = 'thead tr'
     table_body_row_css = 'tbody tr'
     table_cell_css = 'th, td'
@@ -53,6 +56,8 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
     reference_css = 'a.ref'
     figure_css = 'figure'
     figure_caption_css = 'figcaption'
+    figure_img_css = 'img[src]'
+    figure_id_css = 'figure[id]'
     citation_css = 'cite'
     ignore_css = 'a.ref sup'
 
@@ -121,13 +126,18 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
             return [element_cls('')]
         element = elements[0]
         for next_element in elements[1:]:
-            element += element_cls(' ') + next_element
+            if next_element.__class__.__name__ == element.__class__.__name__:
+                element += element_cls(' ') + next_element
         return [element]
 
     def _parse_figure(self, el, refs, specials):
         caps = self._css(self.figure_caption_css, el)
         caption = self._parse_text(caps[0], refs=refs, specials=specials, element_cls=Caption)[0] if caps else Caption('')
-        fig = Figure(caption, id=el.get('id', None))
+        img = self._css(self.figure_img_css, el)
+        img_url = img[0].attrib['src'] if img else ''
+        id = self._css(self.figure_id_css, el)
+        img_id = id[0].attrib['id'] if id != [] else ''
+        fig = Figure(caption, url=img_url, id=img_id)
         return [fig]
 
     def _parse_table_rows(self, els, refs, specials):
@@ -162,14 +172,14 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
 
     def _parse_reference(self, el):
         """Return reference ID from href or text content."""
-        if '#' in el.get('href', ''):
-            return [el.get('href').split('#', 1)[1]]
+        if el.get('href', '').startswith('#'):
+            return [el.get('href')[1:]]
         elif 'rid' in el.attrib:
             return [el.attrib['rid']]
         elif 'idref' in el.attrib:
             return [el.attrib['idref']]
         else:
-            return [''.join(el.itertext()).strip()]
+            return [el.text.strip()]
 
     def _parse_table(self, el, refs, specials):
         caps = self._css(self.table_caption_css, el)
@@ -181,7 +191,12 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
         return [tab]
 
     def _xpath(self, query, root):
-        result = root.xpath(query, smart_strings=False)
+        if query == 'descendant-or-self::caption':
+            result = root.xpath(query, smart_strings=False)
+            other_result = root.xpath('descendant-or-self::div ', smart_strings=False)
+            #print(etree.tostring(result, pretty_print=True))
+        else:
+            result = root.xpath(query, smart_strings=False)
         if type(result) is not list:
             result = [result]
         log.debug('Selecting XPath: {}: {}'.format(query, result))
@@ -196,6 +211,10 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
             return True
         return False
 
+    def _find_table(self, root):
+        """ Identifies table html"""
+        return self._css(self.table_css, root)
+
     @abstractmethod
     def _make_tree(self, fstring):
         """Read a string into an lxml elementtree."""
@@ -206,6 +225,7 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
         if root is None:
             raise ReaderError
         root = self._css(self.root_css, root)[0]
+        print(etree.tostring(root, pretty_print=True))
         for cleaner in self.cleaners:
             cleaner(root)
         specials = {}
@@ -213,7 +233,7 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
         titles = self._css(self.title_css, root)
         headings = self._css(self.heading_css, root)
         figures = self._css(self.figure_css, root)
-        tables = self._css(self.table_css, root)
+        tables = self._find_table(root)
         citations = self._css(self.citation_css, root)
         references = self._css(self.reference_css, root)
         ignores = self._css(self.ignore_css, root)
@@ -228,7 +248,8 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
         for figure in figures:
             specials[figure] = self._parse_figure(figure, refs=refs, specials=specials)
         for table in tables:
-            specials[table] = self._parse_table(table, refs=refs, specials=specials)
+            tab_id = table[0] if type(table) == tuple else table
+            specials[tab_id] = self._parse_table(table, refs=refs, specials=specials)
         for citation in citations:
             specials[citation] = self._parse_text(citation, element_cls=Citation, refs=refs, specials=specials)
         elements = self._parse_element(root, specials=specials, refs=refs)
