@@ -23,6 +23,7 @@ from ..parse.context import ContextParser
 from ..parse.cem import ChemicalLabelParser, CompoundHeadingParser, CompoundParser, chemical_name
 from ..parse.table import CaptionContextParser
 from ..parse.ir import IrParser
+from ..parse.microscopy import TemParser, SemParser, HaadfStemParser, HrtemParser, CryoemParser
 from ..parse.mp import MpParser
 from ..parse.tg import TgParser
 from ..parse.nmr import NmrParser
@@ -292,7 +293,8 @@ class Citation(Text):
 
 
 class Caption(Text):
-    parsers = [CompoundParser(), ChemicalLabelParser(), CaptionContextParser()]
+    parsers = [CompoundParser(), TemParser(), SemParser(), HaadfStemParser(), HrtemParser(),
+               CryoemParser(), ChemicalLabelParser(), CaptionContextParser()]
 
     def _repr_html_(self):
         return '<caption class="cde-caption">' + self.text + '</caption>'

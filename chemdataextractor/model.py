@@ -447,6 +447,7 @@ class Compound(BaseModel):
     quantum_yields = ListType(ModelType(QuantumYield))
     fluorescence_lifetimes = ListType(ModelType(FluorescenceLifetime))
     electrochemical_potentials = ListType(ModelType(ElectrochemicalPotential))
+    microscopy = ListType(StringType())
 
     def merge(self, other):
         """Merge data from another Compound into this Compound."""

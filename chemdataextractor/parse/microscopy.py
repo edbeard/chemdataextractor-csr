@@ -31,16 +31,16 @@ tem_strict = (Optional(I('Transmission')) + I('electron') + R('^micro(graph(s)?)
 tem_acronym = W('TEM')
 tem_phrase = (tem_strict | tem_acronym | tem)('tem')
 
-# High angle annular dark field scanning transmission electron microscopy (HAADF STEM)
-haadf_stem_acronym = W('HAADF') + Optional(hyph + W('STEM'))
-haadf_stem_phrase = haadf_stem_acronym('haadf_stem')
-
 # Scanning Electron Microscopy (SEM)
 sem = (I('scanning') + I('electron') + R('^micro(graph(s)?|scopy)$'))
 se = (I('secondary') + I('electron')) | W('SE')  # Sub-types of SEM imaging
 bse = ((I('backscattered') | (I('back') + I('scattered'))) + I('electron')) | W('BSE')
 sem_acronym = W('SEM')
 sem_phrase = (sem | sem_acronym | se | bse)('sem')
+
+# High angle annular dark field scanning transmission electron microscopy (HAADF STEM)
+haadf_stem_acronym = W('HAADF') + Optional(hyph + W('STEM'))
+haadf_stem_phrase = haadf_stem_acronym('haadf_stem')
 
 # High Resolution Transmission Electron Microscopy (HRTEM)
 hrtem = (I('high') + Optional(hyph) + I('resolution') | W('HR')) + tem_phrase
