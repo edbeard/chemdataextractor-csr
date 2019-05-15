@@ -1,47 +1,35 @@
-ChemDataExtractor
-=================
+ChemDataExtractor-IDE
+=====================
 
-.. image:: http://img.shields.io/pypi/v/ChemDataExtractor.svg?style=flat-square
-    :target: https://pypi.python.org/pypi/ChemDataExtractor
 
 .. image:: http://img.shields.io/pypi/l/ChemDataExtractor.svg?style=flat-square
     :target: https://github.com/mcs07/ChemDataExtractor/blob/master/LICENSE
 
-.. image:: http://img.shields.io/travis/mcs07/ChemDataExtractor.svg?style=flat-square
-    :target: https://travis-ci.org/mcs07/ChemDataExtractor
 
-ChemDataExtractor is a toolkit for extracting chemical information from the scientific literature.
-
-
-Features
---------
-
-- HTML, XML and PDF document readers
-- Chemistry-aware natural language processing pipeline
-- Chemical named entity recognition
-- Rule-based parsing grammars for property and spectra extraction
-- Table parser for extracting tabulated data
-- Document processing to resolve data interdependencies
-
+ChemDataExtractor-IDE is an extension of the `ChemDataExtractor`_ repository with the functionality to identify microscopy images automatically.
 
 Installation
 ------------
 
-To install ChemDataExtractor, simply run::
+To install ChemDataExtractor, clone the repository with::
 
-    pip install chemdataextractor
+    git clone https://github.com/edbeard/chemdataextractor-ide.git
 
-Or if you are an Anaconda user, run::
+and run::
 
-    conda install -c chemdataextractor chemdataextractor
+    python setup.py install
 
-Alternatively, try one of the other `installation options`_.
+Then download the necessary machine learning models with::
+
+    cde data download
 
 
 Documentation
 -------------
 
-Full documentation is available at http://chemdataextractor.org/docs
+This code is intended to be used with the `ImageDataExtractor`_ software toolkit for the automatic extraction of microscopy images. Full details on installation and integration with ChemDataExtractor-IDE can be found at [dummy].
+
+Full documentation on the general use of ChemDataExtractor is available at http://chemdataextractor.org/docs
 
 
 License
@@ -51,5 +39,6 @@ ChemDataExtractor is licensed under the `MIT license`_, a permissive, business-f
 software.
 
 
-.. _`installation options`: http://chemdataextractor.org/docs/install
+.. _`ImageDataExtractor`: dummy
 .. _`MIT license`: https://github.com/mcs07/ChemDataExtractor/blob/master/LICENSE
+.. _`ChemDataExtractor`: https://github.com/CambridgeMolecularEngineering/chemdataextractor
