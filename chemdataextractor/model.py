@@ -448,6 +448,7 @@ class Compound(BaseModel):
     fluorescence_lifetimes = ListType(ModelType(FluorescenceLifetime))
     electrochemical_potentials = ListType(ModelType(ElectrochemicalPotential))
     microscopy = ListType(StringType())
+    figure = ListType(StringType())
 
     def merge(self, other):
         """Merge data from another Compound into this Compound."""
