@@ -6,7 +6,7 @@ ChemDataExtractor-IDE
     :target: https://github.com/mcs07/ChemDataExtractor/blob/master/LICENSE
 
 
-ChemDataExtractor-IDE is an extension of the `ChemDataExtractor`_ repository with the functionality to identify microscopy images automatically.
+ChemDataExtractor-CSDE is an extension of the `ChemDataExtractor`_ repository with the functionality to identify candidate chemical scheamtic diagram images automatically.
 
 Installation
 ------------

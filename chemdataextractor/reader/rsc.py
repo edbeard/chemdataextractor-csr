@@ -42,6 +42,7 @@ class RscHtmlReader(HtmlReader):
     table_footnote_css = 'tfoot tr th .sup_inf'
     figure_css = '.image_table'
     figure_image_css = 'img[src]'
+    figure_hi_res_css = 'a[title="Select to open image in new window"]'
     figure_caption_css = '.graphic_title'
     figure_id_css = 'span[id]'
     ignore_css = '.table_caption + table, .left_head, sup span.sup_ref, small sup a, a[href^="#fn"], .PMedLink'
@@ -58,8 +59,13 @@ class RscHtmlReader(HtmlReader):
     def _parse_figure(self, el, refs, specials):
         caps = self._css(self.figure_caption_css, el)
         caption = self._parse_text(caps[0], refs=refs, specials=specials, element_cls=Caption)[0] if caps else Caption('')
-        img = self._css(self.figure_img_css, el)
-        img_url = img[0].attrib['src'] if img else ''
+        img_hi_res = self._css(self.figure_hi_res_css, el)
+        img_hi_res_url = img_hi_res[0].attrib['href'] if img_hi_res else ''
+        if img_hi_res_url:
+            img_url = img_hi_res_url
+        else:
+            img = self._css(self.figure_img_css, el)
+            img_url = img[0].attrib['src'] if img else ''
         if 'http://pubs.rsc.org' not in img_url:
             img_url='http://pubs.rsc.org' + img_url
         id = self._css(self.figure_id_css, el)
@@ -91,6 +97,6 @@ class RscHtmlReader(HtmlReader):
         """"""
         if fname and not (fname.endswith('.html') or fname.endswith('.htm')):
             return False
-        if b'meta name="citation_doi" content="10.1039' in fstring:
+        if b'meta name="citation_doi" content="10.1039' in fstring or b'meta content="10.1039' in fstring:
             return True
         return False
