@@ -72,6 +72,13 @@ class BaseType(six.with_metaclass(ABCMeta)):
         else:
             return value
 
+class BoolType(BaseType):
+    """"""
+
+    def process(self, value):
+        """Convert value to a unicode string. Useful in case lxml _ElementUnicodeResult are passed from parser."""
+        return True if value else False
+
 
 class StringType(BaseType):
     """"""
@@ -435,6 +442,13 @@ class ElectrochemicalPotential(BaseModel):
     apparatus = StringType(contextual=True)
 
 
+class ChemSchematicDiagram(BaseModel):
+    """Identifies chemical diagrams"""
+
+    exists = BoolType()
+    disallowed = BoolType()
+
+
 class Compound(BaseModel):
     names = ListType(StringType())
     labels = ListType(StringType())
@@ -448,7 +462,7 @@ class Compound(BaseModel):
     fluorescence_lifetimes = ListType(ModelType(FluorescenceLifetime))
     electrochemical_potentials = ListType(ModelType(ElectrochemicalPotential))
     microscopy = ListType(StringType())
-    figure = ListType(StringType())
+    figure = ListType(ModelType(ChemSchematicDiagram))
 
     def merge(self, other):
         """Merge data from another Compound into this Compound."""
