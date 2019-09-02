@@ -1,19 +1,19 @@
-ChemDataExtractor-IDE
+ChemDataExtractor-CSR
 =====================
 
 
 .. image:: http://img.shields.io/pypi/l/ChemDataExtractor.svg?style=flat-square
-    :target: https://github.com/mcs07/ChemDataExtractor/blob/master/LICENSE
+    :target: https://github.com/edbeard/chemdataextractor-csr/blob/master/LICENSE
 
 
-ChemDataExtractor-CSDE is an extension of the `ChemDataExtractor`_ repository with the functionality to identify candidate chemical scheamtic diagram images automatically.
+ChemDataExtractor-CSR is an extension of the `ChemDataExtractor`_ repository with the functionality to identify candidate chemical scheamtic diagram images automatically.
 
 Installation
 ------------
 
 To install ChemDataExtractor, clone the repository with::
 
-    git clone https://github.com/edbeard/chemdataextractor-ide.git
+    git clone https://github.com/edbeard/chemdataextractor-csr.git
 
 and run::
 
@@ -27,7 +27,7 @@ Then download the necessary machine learning models with::
 Documentation
 -------------
 
-This code is intended to be used with the `ImageDataExtractor`_ software toolkit for the automatic extraction of microscopy images. Full details on installation and integration with ChemDataExtractor-IDE can be found at [dummy].
+This code is intended to be used with the `ChemSchematicResolver`_ software toolkit for the automatic extraction of chemical schematic diagrams. Full details on installation and integration with ChemDataExtractor-CSR can be found at [dummy].
 
 Full documentation on the general use of ChemDataExtractor is available at http://chemdataextractor.org/docs
 
@@ -39,6 +39,6 @@ ChemDataExtractor is licensed under the `MIT license`_, a permissive, business-f
 software.
 
 
-.. _`ImageDataExtractor`: dummy
+.. _`ChemSchematicResolver`: dummy
 .. _`MIT license`: https://github.com/mcs07/ChemDataExtractor/blob/master/LICENSE
 .. _`ChemDataExtractor`: https://github.com/CambridgeMolecularEngineering/chemdataextractor
