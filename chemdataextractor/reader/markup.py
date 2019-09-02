@@ -179,7 +179,7 @@ class LxmlReader(six.with_metaclass(ABCMeta, BaseReader)):
         elif 'idref' in el.attrib:
             return [el.attrib['idref']]
         else:
-            return [el.text.strip()]
+            return [''.join(el.itertext()).strip()]
 
     def _parse_table(self, el, refs, specials):
         caps = self._css(self.table_caption_css, el)

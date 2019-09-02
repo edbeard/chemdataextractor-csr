@@ -19,6 +19,7 @@ from .markup import HtmlReader, XmlReader
 from .pdf import PdfReader
 from .plaintext import PlainTextReader
 from .rsc import RscHtmlReader
+from .springer import SpringerHtmlReader
 from .nlm import NlmXmlReader
 from .uspto import UsptoXmlReader
 
@@ -30,6 +31,7 @@ DEFAULT_READERS = [
     UsptoXmlReader(),
     CsspHtmlReader(),
     ElsevierXmlReader(),
+    SpringerHtmlReader(),
     XmlReader(),
     HtmlReader(),
     PdfReader(),
