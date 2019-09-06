@@ -255,7 +255,6 @@ class ElsevierXmlReader(XmlReader):
         if root is None:
             raise ReaderError
         root = self._css(self.root_css, root)[0]
-        print(etree.tostring(root, pretty_print=True))
         for cleaner in self.cleaners:
             cleaner(root)
         specials = {}
