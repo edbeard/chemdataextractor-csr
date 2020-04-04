@@ -6,12 +6,24 @@ ChemDataExtractor-CSR
     :target: https://github.com/edbeard/chemdataextractor-csr/blob/master/LICENSE
 
 
-ChemDataExtractor-CSR is an extension of the `ChemDataExtractor`_ repository with the functionality to identify candidate chemical scheamtic diagram images automatically.
+ChemDataExtractor-CSR is an extension of `ChemDataExtractor`_ with the functionality to identify candidate chemical schematic diagram images automatically.
 
 Installation
-------------
+############
 
-To install ChemDataExtractor, clone the repository with::
+Option 1: **conda** package manager
+-----------------------------------
+
+Installation via conda is highly recommended. Simply run::
+
+    conda install -c edbeard chemdataextractor-csr
+    
+Option 2: From source
+---------------------
+
+Otherwise, please try installing from source.
+
+Clone the repository with::
 
     git clone https://github.com/edbeard/chemdataextractor-csr.git
 
@@ -27,7 +39,7 @@ Then download the necessary machine learning models with::
 Documentation
 -------------
 
-This code is intended to be used with the `ChemSchematicResolver`_ software toolkit for the automatic extraction of chemical schematic diagrams. Full details on installation and integration with ChemDataExtractor-CSR can be found at [dummy].
+This code is intended to be used with the `ChemSchematicResolver`_ software toolkit for the automatic extraction of chemical schematic diagrams. Full details on installation and integration with ChemDataExtractor-CSR can be found in the `documentation`_.
 
 Full documentation on the general use of ChemDataExtractor is available at http://chemdataextractor.org/docs
 
@@ -39,6 +51,7 @@ ChemDataExtractor is licensed under the `MIT license`_, a permissive, business-f
 software.
 
 
-.. _`ChemSchematicResolver`: dummy
-.. _`MIT license`: https://github.com/mcs07/ChemDataExtractor/blob/master/LICENSE
-.. _`ChemDataExtractor`: https://github.com/CambridgeMolecularEngineering/chemdataextractor
+.. _`ChemSchematicResolver`: http://www.chemschematicresolver.org
+.. _`MIT license`: https://github.com/edbeard/ChemDataExtractor-CSR/blob/master/LICENSE
+.. _`ChemDataExtractor`: http://www.chemdataextractor.org
+.. _`documentation`: http://www.chemschematicresolver.org/docs
